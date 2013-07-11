@@ -1,0 +1,131 @@
+@import "compass/css3";
+
+@mixin display-box {
+  @include experimental-value(display, box,
+    -moz, -webkit, not -o, -ms, not -khtml, official
+  );
+  display: -ms-flexbox;
+}
+
+// Box orientation [ horizontal | vertical | inline-axis | block-axis | inherit ]
+@mixin box-orient(
+  $orientation: $default-box-orient
+) {
+  $orientation : unquote($orientation);
+  @include experimental(box-orient, $orientation,
+    -moz, -webkit, not -o, -ms, not -khtml, official
+  );
+  @if $orientation == vertical {
+  	-ms-flex-direction: column;
+  } @else {
+  	-ms-flex-direction: row;
+  }
+}
+
+// Box align [ start | end | center | baseline | stretch ]
+@mixin box-align(
+  $alignment: $default-box-align
+) {
+  $alignment : unquote($alignment);
+  @include experimental(box-align, $alignment,
+    -moz, -webkit, not -o, -ms, not -khtml, official
+  );
+  -ms-flex-align: $alignment;
+}
+
+html{
+  min-height:504px;
+}
+
+body{
+  position:static;
+}
+
+.content{
+  position:static;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+.content > div{
+	height:100%;
+}
+
+.scroller{
+	height:100%
+}
+
+.content.full-width{
+	padding-left:0px;
+	padding-right:0px;
+}
+
+
+/*盒模型布局*/
+.hbox {
+	@include display-box;
+	@include box-orient(horizontal);
+}
+.vbox {
+	@include display-box;
+	@include box-orient(vertical);
+}
+@for $i from 1 through 11 {
+	.flex#{$i} {
+		@include box-flex(#{$i});
+    -ms-flex:#{$i} 0 auto;
+	}
+}
+.box-align-stretch {
+	@include box-align;
+}
+.box-align-center {
+	@include box-align(center);
+}
+
+/*------Chameleon样式---------*/
+.bar-title{
+	height:44px;
+}
+
+.bar-title ~ .content {
+	padding-top: 56px;
+}
+
+.bar-header-secondary ~ .content {
+  	padding-top: 103px;
+}
+
+.bar-header-secondary {
+  	top: 44px;
+  	padding:12px 10px 5px 10px;
+}
+
+.segmented-controller{
+	font-size:10pt;
+}
+.segmented-controller li > a {
+	color:#212121;
+}
+
+/**/
+nav.bar-standard {
+	/*background-color:transparent;*/
+	height:59px;
+}
+
+/* Slide animation */
+.page.slide {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+ -webkit-transition: -webkit-transform .25s ease-in-out;
+         transition:         transform .25s ease-in-out;
+}
+.page.slide.left {
+  -webkit-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0);
+}
+.page.slide.right {
+  -webkit-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0);
+}

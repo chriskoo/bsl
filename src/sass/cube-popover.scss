@@ -1,0 +1,39 @@
+@import "compass/css3";
+
+.popover {
+	position: fixed;
+	height:300px;
+	top: 0;
+	width: 200px;
+	margin-top: 50px;
+	opacity: 1;
+	z-index:1000;
+	padding:0px;
+	border: 2px solid #4367A3;
+	box-shadow: inset 1px 1px -1px -1px white, 2px 1px 5px rgba(0, 0, 0, 0.3);
+	@include background-image(linear-gradient(top, #5C9CE3,#4779BE));
+}
+
+.popover .list {
+	max-height: 100%;
+	background-color: transparent;
+	border:none;
+	color:white;
+	-webkit-overflow-scrolling: touch;
+	
+}
+
+.popover .list li{
+  text-align: center;
+}
+
+.popover:before {
+	margin-left: 30px;
+	border-right: 22px solid transparent;
+	border-left: 22px solid transparent;
+	border-bottom: 21px solid #4367A3;
+}
+.popover:after {
+	margin-left: 32px;
+	border-bottom: 21px solid #5C9CE3;
+}

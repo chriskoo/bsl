@@ -1,0 +1,41 @@
+@import "compass/css3";
+
+.cube-page {
+	padding: 20px;
+	padding-top: 50px;
+	@include box-sizing(border-box);
+	z-index: 0;
+}
+
+.cube-page > *{
+	width:100%;
+}
+
+.cube-page-init {
+	z-index: 1;
+}
+
+.cube-page-nav{
+	min-width: 100%;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin-left: 200%;
+	position: absolute;
+	background: #000;
+	z-index: 2;
+
+	-webkit-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	transition: all .2s linear;
+}
+
+.cube-page-nav-in{
+	margin-left: 0%;
+	background-color: #ffcb00;
+}
+
+.cube-page-nav-out{
+	margin-left: -100%;
+}

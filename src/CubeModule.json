@@ -1,0 +1,9 @@
+{
+	"cubeVersion": "2",
+	"identifier" : "cube",
+	"name" : "Cube Framework",
+	"version" : "2.1",
+	"build" : 3,
+	"releaseNote": "M1",
+	"hidden" : true
+}

@@ -1,0 +1,45 @@
+@import "compass/css3";
+
+@mixin display-box {
+  @include experimental-value(display, box,
+    -moz, -webkit, not -o, -ms, not -khtml, official
+  );
+  display: -ms-flexbox;
+}
+
+.cube-split {
+	@include box-sizing(border-box);
+	padding-top: 43px;
+
+	width:100%; height:100%;
+	position:relative;
+	@include display-box;
+	
+	@include box-orient(horizontal);
+	
+	background:#424242;
+}
+
+.cube-split-left {
+	width:300px;
+	margin-right:1px;
+}
+
+.cube-split-right {
+	@include box-flex(1);
+
+	background: red;
+}
+
+.cube-split-left, .cube-split-right {
+	position:relative;
+	height:100%;
+}
+
+/* 分栏里的内容 */
+nav, .cube-split-right > * {
+	position:absolute;
+	top:0; bottom:0; left:0; right:0;
+	font-size:15px;
+	background:#fff;
+}

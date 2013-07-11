@@ -1,0 +1,89 @@
+@import "compass/css3";
+
+
+.cube-panel {
+  width: 0em;
+  height: 100%;
+  border-width: 0;
+  position: absolute;
+  top: 0;
+  right: -14em;
+  z-index: 1002;
+  -webkit-box-shadow: 2px 0px 1em black;
+  background: #191919;
+  -webkit-backface-visibility: hidden;
+}
+
+.panel-title {
+  height: 43px;
+  top: 0;
+  width: 100%;
+  position: absolute;
+  z-index: 999;
+  background-color: #1eb0e9;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5388c8), color-stop(100%, #2f5a88));
+  background-image: -webkit-linear-gradient(top, #5388c8, #2f5a88);
+  background-image: -moz-linear-gradient(top, #5388c8, #2f5a88);
+  background-image: -o-linear-gradient(top, #5388c8, #2f5a88);
+  background-image: linear-gradient(top, #5388c8, #2f5a88);
+  border-bottom: 1px solid #0e5895;
+  box-shadow: inset 0 1px 1px -1px rgba(255, 255, 255, 0.8);
+  -webkit-box-orient: horizontal;
+}
+
+.cube-panel-position-hide {
+  width: 0px;
+  -webkit-transition: -webkit-transform 0.2s ease;
+  -webkit-transform: translate3d(0em,0,0);
+  transform: translate3d(0em,0,0);
+}
+
+.cube-panel-position-show {
+  width: 13em;
+  -webkit-transition: -webkit-transform 0.2s ease;
+  -webkit-transform: translate3d(-14em,0,0);
+  transform: translate3d(-14em,0,0);
+}
+
+.cube-panel-masker{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  display: none;
+}
+
+.cube-panel a{
+  display: block;
+  height: 40px;
+  border-bottom: inset 1px #dddddd;
+  border-bottom-color: #222222;
+  color: #888888;
+}
+
+.cube-panel a:hover{
+  background: #2a95d3;
+  border-bottom-color: #2a95d3;
+  color: #fff;
+}
+
+.cube-panel a .panel-item-content{
+  float: left;
+  width: 15em;
+  height: 28px;
+  padding: 6px;
+}
+.cube-panel a .panel-item-content img{
+  width:28px;
+  float: left;
+}
+
+.cube-panel a .panel-item-content .panel-btn-text{
+  float:left;
+  line-height: 28px;
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}

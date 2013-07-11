@@ -1,0 +1,29 @@
+@import "compass/css3";
+
+.nav-back-container{
+	position: absolute !important;
+	/*margin-left:0.1em;*/
+	position: relative;
+	padding-top: 4px;
+}
+/**/
+.nav-back{
+	display:block;
+	width:58px;
+	height:30px;
+	line-height: 25px;
+	font-size:15px;
+	background-color: transparent;
+	background-image: url(../images/back.png);
+	@include background-size(100% 100%);
+}
+
+
+div.nav-back,::after, ::before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-drag: none;
+}

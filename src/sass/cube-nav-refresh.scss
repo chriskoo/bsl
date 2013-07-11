@@ -1,0 +1,38 @@
+@import "compass/css3";
+
+.nav-refresh-container{
+	position: relative;
+	vertical-align:middle;
+}
+
+.nav-refresh{
+	width:65px;
+	height:30px;
+	line-height: 25px;
+	text-align:center;
+	margin-right:0.5em;
+	margin-top:0.3em;
+	background-color: transparent;
+	background-image: none;
+	float:right;
+	/*background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #359ee7), color-stop(3%, #1985d0), color-stop(100%, #1468a2));
+	@include background(linear-gradient(top, #359ee7,#1985d0 3%,#1468a2));*/
+	background-image: url(../images/right_btn_bg.png);
+	background-size: 65px 30px;
+	background-repeat:no-repeat;
+}
+
+.nav-refresh:active{
+	background-image: url(../images/right_btn_bg_active.png);
+	background-position:0;
+}
+
+.nav-refresh:hover{
+	@extend .nav-refresh:active;
+}
+
+.nav-refresh div{
+	font-size: 14px;
+   	line-height:31px;
+    text-align:center;
+}

@@ -1,0 +1,25 @@
+{
+	"name": "bsl",
+  "description": "Cube HTML5 Framework for Mobile",
+  "version": "1.1.1",
+  "author": {
+    "name": "Justin Yip",
+    "email": "justin.yip@foxmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yezhiming/cube-sdk.git"
+  },
+  "bin": {
+    "bsl" : "./bin/cli.js"
+  },
+  "dependencies": {
+    "mkdirp": "~0.3.4",
+    "commander": "0.6.1",
+    "ncp": "0.4.2",
+    "underscore": "*",
+    "rimraf": "*",
+    "adm-zip": "0.4.3",
+    "request": "*"
+  }
+}

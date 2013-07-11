@@ -1,0 +1,204 @@
+@import "compass/css3";
+
+/**
+ *
+ * Pull down styles
+ *
+ */
+#pullDown, #pullUp {
+	/*background:#fff;*/
+	height:40px;
+	line-height:40px;
+	padding:5px 10px;
+	font-weight:bold;
+	font-size:14px;
+	color:#888;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px; height:40px;
+	background:url(../images/pull-icon@2x.png) 0 0 no-repeat;
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+/*---------------------------------------------------------------------------------------
+
+									共同样式
+
+----------------------------------------------------------------------------------------*/
+
+.contentScroller {
+	@include box-sizing(border-box);
+	-ms-box-sizing: border-box;
+	background-color:#F6F6F6;
+}
+
+.cube-list-item-more div{
+	height:20px;
+}
+
+.cube-list-item-more {
+	font-size: 16px;
+	line-height: 20px;
+	padding: 10px;
+	font-weight: bold;
+	font-family: Helvetica, Arial, sans-serif;
+	border-bottom-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	text-align: center;
+	border-bottom: 1px solid #DDD;
+}
+
+
+.cube-list-item-more-record {
+	@extend .cube-list-item-more;
+	color:#888;
+}
+
+
+.cube-list-item:hover {
+  background-color: #def!important;
+}
+
+.cube-extend-view > div:hover {
+  background-color:#def!important;
+}   
+
+/*---------------------------------------------------------------------------------------
+
+					空皮肤: 白底灰色横线分割
+
+----------------------------------------------------------------------------------------*/
+
+.cube-list-nostyle .contentScroller > .item-content > li:first-child,.cube-list-grouped .contentScroller li:first-child{
+	border-top:1px solid #DDD;
+}
+
+.cube-list-nostyle .contentScroller li:last-child{
+	border-bottom:1px solid #DDD;
+}
+
+.cube-list-nostyle .contentScroller li {
+	border-bottom:1px solid #ccc;
+}
+
+/*---------------------------------------------------------------------------------------
+
+					包裹皮肤:白底,四角圆角,灰色边框,灰色横线分割,下阴影
+
+----------------------------------------------------------------------------------------*/
+/*--- 外部容器,及 ---*/
+
+
+.cube-list-grouped .contentScroller li {
+	border-bottom:1px solid #ccc;
+}
+
+.cube-list-grouped .contentScroller li{
+	border-left:1px solid #DDD;
+	border-right:1px solid #DDD;
+}
+
+.cube-list-grouped .contentScroller > .item-content > li:first-child,.cube-list-grouped .contentScroller li:first-child{
+	border-top:1px solid #DDD;
+	@include border-top-radius(0.4em);
+}
+
+
+.cube-list-grouped .contentScroller li:last-child{
+	border-bottom:1px solid #DDD;
+	box-shadow:0px 1px 1px #B8B8B8;
+}
+
+/*---  行元素  ----*/
+.cube-list-grouped .cube-list-item {
+	cursor: pointer;
+	background-color:white;
+	/*@include background(linear-gradient(#ffffff, #f1f1f1));*/
+}
+
+.cube-list-grouped .cube-list-item-more {
+	cursor: pointer;
+	background-color:white;
+	font-size: 16px;
+	line-height: 20px;
+	padding: 10px;
+	font-weight: bold;
+	font-family: Helvetica, Arial, sans-serif;
+	border-bottom-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	text-align: center;
+	@include border-bottom-radius(0.4em);
+}
+
+
+
+.cube-list-grouped .cube-list-item-search {
+	@extend .cube-list-item;
+}
+
+.cube-list-grouped .cube-list-item-title{
+	padding: 0em 10px;
+	font-weight: bold;
+	color:white;
+	background: rgb(44, 133, 221);
+	font-size: 14px;
+	white-space: nowrap;
+	font-family: Helvetica, Arial, sans-serif;
+	text-shadow: 0px 0px 0px white;
+	
+}
+
+.cube-list-grouped .cube-list-item-content{
+	padding: 0em 15px;
+	border: 1px solid #DAE8F6;
+	text-align: left;
+	font-size: 13px;
+	font-weight: bold;
+	line-height:15px;
+	@extend .cube-list-item;
+}
+
+
+
+
+
+/*------extend---------*/
+.cube-list-grouped .cube-extend-view{
+	background-color:red;
+	display:none;
+}

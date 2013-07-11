@@ -1,0 +1,102 @@
+@import "compass/css3";
+
+.cube-form-fieldset {
+	@include border-top-left-radius(0.4em);
+	@include border-top-right-radius(0.4em);
+	padding: 0px;
+
+	> div{
+		@include box-shadow(0 1px 1px #B8B8B8);
+		@include border-radius(0.6em);
+	}
+	> header {
+		font-size: 18px;
+		font-weight: bold;
+		padding: 10px;
+	}
+}
+
+.cube-form-field {
+	
+	@include box-orient(horizontal);
+	display:block;
+	border-bottom: 1px solid #DDD;
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	background: white;
+
+	
+	.cube-form-label {
+		background-color: white;
+		@include box-flex(1);
+		width:34%;
+		padding-top:10px;
+		padding-bottom:10px;
+		padding-left:2%;
+		display:inline-block;
+	}
+
+	.cube-form-textfield {
+		@include box-flex(2);
+		display:inline-block;
+		width:60%;
+		word-wrap:break-word;
+		overflow:hidden;
+
+		* {
+			box-shadow: none;
+			@include box-sizing(border-box);
+			width: 100%;
+			border: 0px;
+			padding-top:10px;
+			padding-bottom:10px;
+			margin: 0px;
+			-webkit-border-radius: 0px;
+			-moz-border-radius: 0px;
+			border-radius: 0px;
+		}
+
+		div {
+			padding-top:0px;
+			padding-bottom:0px;
+		}
+	}
+
+	.cube-form-textfield2 {
+		@include box-flex(2);
+		display:inline-block;
+		width:62%;
+	}
+}
+
+.cube-form-field:first-child{
+	border: 1px solid #DDD;
+	> .cube-form-label{
+		@include border-top-left-radius(0.6em);
+	}
+	@include border-top-radius(0.6em);
+}
+
+
+.cube-form-field:last-child{
+	> .cube-form-label{
+		@include border-bottom-left-radius(0.6em);
+	}
+	@include border-bottom-radius(0.6em); 
+}
+
+
+.baseform{
+	background:white;
+	border:1px #dddddd solid;
+	border-radius:0.4em;
+}
+.baseformElem{
+	border-bottom: 1px #dddddd solid;
+	padding:8px 5px 8px 5px;
+}
+
+
+
+
+

@@ -1,0 +1,75 @@
+@import "compass/css3";
+
+/*     cube   ul     */
+.cube-ul{
+  -webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+  @include border-radius(.8em);
+}
+
+.cube-ul > .nav-tabs.nav-stacked > li > a > img.icon{margin-left:10px;margin-right: 30px}
+.cube-ul > .nav-tabs.nav-stacked > li > a > span{font-size: 16px;font-weight: bold;}
+.cube-ul > .nav-tabs.nav-stacked > li:first-child div:first-child{
+  @include border-top-radius(0.4em);
+  vertical-align:middle
+};
+
+.cube-ul > .nav-tabs.nav-stacked > li:last-child > div:last-child{
+  @include border-bottom-radius(0.4em);
+};
+.cube-ul > .nav-tabs.nav-stacked > li:last-child{
+  @include border-bottom-radius(0.4em);
+};
+
+.cube-ul > .nav-tabs.nav-stacked,
+.cube-ul > .nav-tabs.nav-stacked > li:first-child,
+.cube-ul > .nav-tabs.nav-stacked > li:first-child > *{
+  @include border-top-left-radius(4px);
+  @include border-top-right-radius(4px);
+}
+
+.cube-ul > .nav-tabs.nav-stacked > li > a{
+  min-height:30px;
+}
+
+.cube-ul > .nav-tabs.nav-stacked > li{
+  background-color:white;
+  color:#478AC9;
+  /*background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f1f1f1) );
+  background-image: -webkit-linear-gradient(#ffffff, #f1f1f1);
+  background-image: -moz-linear-gradient(#ffffff, #f1f1f1);
+  background-image: -ms-linear-gradient(#ffffff, #f1f1f1);
+  background-image: -o-linear-gradient(#ffffff, #f1f1f1);
+  background-image: linear-gradient(#ffffff, #f1f1f1);*/
+}
+
+.cube-ul-title{height:35px;background: #0F88CD !important;font-size:18px;}
+.cube-ul-title > div{color:white;padding-top: 9px;margin-left: 15px}
+.ui-corner-top{
+  -moz-border-radius-topleft: .6em;
+  -webkit-border-top-left-radius: .6em;
+  border-top-left-radius: .6em;
+  -moz-border-radius-topright: .6em;
+  -webkit-border-top-right-radius: .6em;
+  border-top-right-radius: .6em;
+}
+
+.ui-corner-bottom{
+  -moz-border-radius-bottomleft: .6em;
+  -webkit-border-bottom-left-radius: .6em;
+  border-bottom-left-radius: .6em;
+  -moz-border-radius-bottomright: .6em;
+  -webkit-border-bottom-right-radius: .6em;
+  border-bottom-right-radius: .6em;
+}
+
+.ui-corner-all{
+ -moz-border-radius: .6em;
+ -webkit-border-radius: .6em;
+ border-radius: .6em;
+}
+
+.ui-shadow {
+-moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+}

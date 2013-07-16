@@ -1,9 +1,9 @@
 {
-	"cubeVersion": "2",
 	"identifier" : "cube",
-	"name" : "Cube Framework",
-	"version" : "2.1",
-	"build" : 3,
-	"releaseNote": "M1",
+	"name" : "Cube v2.0",
+	"version" : "2.0.5",
+	"build" : 5,
+	"releaseNote": "全新Cube2.0",
 	"hidden" : true
 }
+

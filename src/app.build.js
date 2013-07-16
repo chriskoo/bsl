@@ -1,7 +1,7 @@
 ({
     appDir: ".",
     baseUrl: ".",
-    dir: 'csair-build',
+    dir: 'build',
 
     inlineText: true,
 
@@ -59,7 +59,8 @@
     optimizeCss: "standard",
 
     modules: [{
-        name: "js/cube"
-    }]
+            name: "js/cube"
+        }
+    ]
 
 })

@@ -1,31 +1,3 @@
-/*********************************************************************
-* 系统名称   : 变色龙移动应用平台                                         *
-* 当前版本   : V2.0.0.0                                                  *
-*--------------------------------------------------------------------*
-* 代码名称   : list.js                                              *
-* 业务系统   : cube框架                                                *
-* 代码类型   : javascript                                                      *
-* 代码功能   : 幻灯片组件                                    *
-*                                                                    *
-*--------------------------------------------------------------------*
-* 创建人员   : 变色龙一期人员                                             *
-* 创建日期   : 2013.06.09                                                 *
-*--------------------------------------------------------------------*
-* 变更历史   :                                                       *
-*日期      20130610                                                 *
-*变更人     冯秋明                                                  *
-*变更原因   list组件不能触发滑动事件                         *
-*变更内容   重新设计了该控件的大小生成机制，从而修复了滑动不能的问题              *                   
-*                                                                    *                      
-*                                                                    *
-*--------------------------------------------------------------------*
-* 变更历史   :                                                       *
-*日期      20130612                                                 *
-*变更人     冯秋明                                                    *
-*变更内容   添加下拉刷新功能                                             *                   
-*                                                                    *                      
-*                                                                    *
-*********************************************************************/
 
 /*
  * 列表组件，最终转换出html5
@@ -134,29 +106,29 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                                 //this.maxScrollY = pullUpOffset;
                             }
 
+                            
                             var pullDownRefreshHeight = 40;
                             pullDownRefreshEl = me.$('#PullDownRefresh')[0];
                             if (pullDownRefreshEl) {
                                 if((this.y > pullDownRefreshHeight)&&(this.options.topOffset>0)){
 
                                     this.options.topOffset=0;
-                                    pullDownRefreshEl.className = 'flip';
-                                    $(pullDownRefreshEl).find('#pullDownRefreshIcon').addClass('pullDownFlip180');
-                                    $(pullDownRefreshEl).find('#pullDownRefreshIcon').css({'background':'url(cube/images/pull-icon@2x.png) 0px 0px no-repeat','background-size':'40px 80px'});
+                                    $(pullDownRefreshEl).find('#pullDownRefreshIcon').attr({'class':'pullDownIn'});
                                     $(pullDownRefreshEl).find('#pullDownRefreshLable').text('Release to reload...');
+                                    $(me.$('#pullDownRefreshIconWarp')[0]).addClass('pullDownFlip180');
 
 
 
                                 }else if((this.y < pullDownRefreshHeight)&&(this.options.topOffset==0)){
-                                    $(pullDownRefreshEl).find('#pullDownRefreshIcon').removeClass('pullDownFlip');
                                     this.options.topOffset = parseInt($(pullDownRefreshEl).css('height'));
-                                    $(pullDownRefreshEl).find('#pullDownRefreshIcon').css({'background':'url(cube/images/pull-icon@2x.png) 0px 0px no-repeat','background-size':'40px 80px'});
+                                    $(pullDownRefreshEl).find('#pullDownRefreshIcon').removeClass('pullDownOut').addClass('pullDownIn');
                                     $(pullDownRefreshEl).find('#pullDownRefreshLable').text('Pull down to reload...');
-                                    $(pullDownRefreshEl).find('#pullDownRefreshIcon').removeClass('pullDownFlip180');
                                     Cache.put("onScrollMove","false");
+                                    $(me.$('#pullDownRefreshIconWarp')[0]).removeClass('pullDownFlip180');
 
                                 }else if(this.y > 0){
                                     Cache.put("onScrollMove","false");
+
                                 }
                             }
 
@@ -164,13 +136,14 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                     },
                     onBeforeScrollEnd: function(){
                         pullDownRefreshEl = me.$('#PullDownRefresh')[0];
-                        if((pullDownRefreshEl!=null)&&(this.options.topOffset == 0)){
 
-                                $(pullDownRefreshEl).find('#pullDownRefreshIcon').css({'background':'url(cube/images/pull-icon@2x.png) 0px -40px no-repeat;','background-size':'40px 80px'});
+                        if((pullDownRefreshEl!=null)&&(this.options.topOffset == 0)){
+                                $(pullDownRefreshEl).find('#pullDownRefreshIcon')
+                                    .removeClass('pullDownIn')
+                                    .addClass('pullDownOut');
                                 $(pullDownRefreshEl).find('#pullDownRefreshLable').text('Reloading...');
-                                $(pullDownRefreshEl).find('#pullDownRefreshIcon').removeClass('pullDownFlip180');
-                                $(pullDownRefreshEl).find('#pullDownRefreshIcon').addClass('pullDownFlip');
                                 this.refresh();
+
                         }
                         // 
                     },
@@ -181,7 +154,6 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                             pullUpOffset = pullUpEl.offsetHeight;
 
                             if (pullUpEl.className.match('flip')) {
-
                                 pullUpEl.className = 'loading';
                                 pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';
                                 me.config.page = me.config.page + 1;
@@ -193,15 +165,21 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
 
                         pullDownRefreshEl = me.$('#PullDownRefresh')[0];
                         if((pullDownRefreshEl!=null)&&(this.options.topOffset == 0)){
+                                var that = this;
 
-                                this.options.topOffset = parseInt($(pullDownRefreshEl).css('height'));
-                                $(pullDownRefreshEl).find('#pullDownRefreshLable').text('Pull down to refresh...');
-                                me.loadNextPage();
-                                $(pullDownRefreshEl).find('#pullDownRefreshIcon').css({'background':'url(cube/images/pull-icon@2x.png) 0px 0px no-repeat;','background-size':'40px 80px'});
-                                $(pullDownRefreshEl).find('#pullDownRefreshIcon').removeClass('pullDownFlip');
+                                $(pullDownRefreshEl).find('#pullDownRefreshIcon').attr({'class':'pullDownOut'});
+                                me.loadNextPage(function(){
+                                    Cache.put("onScrollMove","false");
+                                    $(pullDownRefreshEl).find('#pullDownRefreshLable').text('Pull down to refresh...');
+                                    that.options.topOffset = parseInt($(pullDownRefreshEl).css('height'));
+                                    $(pullDownRefreshEl).find('#pullDownRefreshIcon').attr({'class':'pullDownIn'});
+                                    $(me.$('#pullDownRefreshIconWarp')[0]).removeClass('pullDownFlip180');
+                                    that.refresh();
+                                    
+                                });
+                                
 
 
-                                Cache.put("onScrollMove","false");
                         }
 
                     }
@@ -292,7 +270,7 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                     li.html('无相关记录');
                     li.appendTo(me.el.querySelector('.contentScroller .item-content'));
                     $('#pullUp').remove();
-                    console.log("list: 没有数据");
+                    console.log("cube---list---list: 没有数据");
                 }
                 return;
             }
@@ -337,7 +315,6 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                     
                     if (jsonArray[i][skarry[skarry.length - 1]]) {
 
-                        console.log(jsonArray[i][skarry[skarry.length - 1]])
                         fkword = fkword + jsonArray[i][skarry[skarry.length - 1]];
                     }
                     li.attr('filter-keyword', fkword.toLowerCase());
@@ -387,8 +364,8 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
             }
         },
 
-        loadNextPage: function() {
-            console.log('list:load  begin');
+        loadNextPage: function(callback) {
+            console.log('cube---list---list:load  begin');
             var me = this;
             var loader;
 
@@ -415,7 +392,7 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                 data: me.requestParams,
                 dataType: "json",
                 beforeSend: function(xhr, settings) {
-                    console.log('list: request data...');
+                    console.log('cube---list---list: request data...');
                     if (me.request) {
                         me.request.abort();
                     }
@@ -424,9 +401,12 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                 complete: function() {
                     me.request = null;
                     me.refreshIscroll(me);
+                    if(callback){
+                        callback();
+                    }
                 },
                 success: function(data, textStatus, jqXHR) {
-                    console.log('列表数据加载成功：' + textStatus + " response:[" + data + "]");
+                    console.log('cube---list---列表数据加载成功：' + textStatus + " response:[" + data + "]");
                     me.trigger("load", me, data);
 
                     var jsonRoot = data;
@@ -441,7 +421,7 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                     if (_itemTemplateName) templateStr = this.$("#" + _itemTemplateName).html();
 
                     //append
-                    console.log(jsonRoot.length + ' records in total');
+                    console.log("cube---list---"+jsonRoot.length + ' records in total');
 
                     me.loadListByJSONArray(jsonRoot);
 
@@ -453,12 +433,12 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
 
                     me.trigger("loaded", me, data);
                     loader.hide();
-                    console.log('list:load and draw  end');
+                    console.log('cube---list---list:load and draw  end');
 
                 },
                 error: function(e, xhr, type) {
                     me.config.page = me.config.page - 1;
-                    console.error('列表数据加载失败：' + e + "/" + type + "/" + xhr);
+                    console.error('cube---list---列表数据加载失败：' + e + "/" + type + "/" + xhr);
                     loader.hide();
                 }
             });
@@ -482,8 +462,8 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
         compile: function(elContext) {
             var me = this;
             return _.map($(elContext).find("list"), function(tag) {
-                console.log('list:compile');
-                var config = me.parseConfig(tag, ['id', 'itemTemplate', '_itemTemplate', 'moreItemElement', 'url', 'method', 'jsonRoot', 'class', 'paging', 'iScroll', 'isPullDownRefresh', 'autoLoad', 'pageParam', 'searching', 'searchkeys', 'filterStr', 'pageSize', 'skin', 'loaderText', 'searchText', 'width', 'height']);
+                console.log('cube---list---list:compile');
+                var config = me.parseConfig(tag, ['id', 'itemTemplate', '_itemTemplate', 'moreItemElement', 'url', 'method', 'jsonRoot', 'class', 'paging', 'iScroll', 'isPullDownRefresh', 'autoLoad', 'pageParam', 'searching', 'searchkeys', 'filterStr', 'pageSize', 'skin', 'loaderText', 'searchText', 'width', 'height','additionHeight']);
 
                 //build html
                 //<div id="{id}">
@@ -520,51 +500,14 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
 
                 var pullDownRefreshDiv;
                 if(config.isPullDownRefresh=='true'){
+                    //var background-image=
                     pullDownRefreshDiv = document.createElement('div');
                     $(pullDownRefreshDiv).attr('id','PullDownRefresh');
-                    $(pullDownRefreshDiv).attr('style','text-align:center;display:block;z-index:10000;height: 40px;line-height: 40px;padding: 0px;font-weight: bold;font-size: 14px;color: #888;width:100%;');
-                    $(pullDownRefreshDiv).append('<span id="pullDownRefreshIcon" style="display:block;float: left;background: url(cube/images/pull-icon@2x.png) 0 0 no-repeat;background-size: 40px 80px;-webkit-transition-property: -webkit-transform;-webkit-transition-duration: 250ms;width: 40px;height: 40px;"></span><span id="pullDownRefreshLable">Pull down to refresh...</span>');
+                    $(pullDownRefreshDiv).attr('style','height: 40px;');
+                    $(pullDownRefreshDiv).append('<span id="pullDownRefreshIconWarp"><span id="pullDownRefreshIcon"></span></span><span id="pullDownRefreshLable">Pull down to refresh...</span>');
                     
 
-                    var flisStyle = "<style>"+
-                        ".pullDownFlip{"+
-                        "-webkit-animation-name:'flipRotate';"+
-                        "-webkit-animation-duration: 2s;"+
-                        "-webkit-animation-timing-function: linear; "+
-                        "-webkit-animation-delay: 0s;"+
-                        "-webkit-animation-iteration-count: infinite;"+
-                        "}"+
-                        ".pullDownFlip180{"+
-                        "-webkit-transform: rotate(180deg);"+
-
-                        // "-webkit-animation-name:'flip180';"+
-                        "-webkit-animation-duration: 0.5s;"+
-                        "-webkit-animation-timing-function: linear; "+
-                        "-webkit-animation-delay: 0s;"+
-                        "-webkit-animation-iteration-count: 1;"+
-                        "}"+
-                        "@-webkit-keyframes flipRotate { "+
-                        "    0% { "+
-                        "-webkit-transform: rotate(0deg);"+
-                        "} "+
-                        "50% { "+
-                        "-webkit-transform: rotate(180deg); "+
-                        "}"+
-                        "100% { "+
-                        "-webkit-transform: rotate(360deg);"+
-                        "} "+
-                        "}"+
-
-                        "@-webkit-keyframes flip180 { "+
-                        "    0% { "+
-                        "-webkit-transform: rotate(0deg);"+
-                        "} "+
-                        "100% { "+
-                        "-webkit-transform: rotate(180deg);"+
-                        "} "+
-                        "}"+
-                        "</style>";
-                        $(pullDownRefreshDiv).append(flisStyle);
+                    
                         // $(pullDownRefreshDiv).addClass('pullDownFlip');
                      // $(list_el).prepend(pullDownRefreshDiv);
                     // $(listContainer).appendChild(pullDownRefreshDiv);
@@ -593,15 +536,22 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                 var list = new List(config);
 
                 // $(list_el).refresh({ready:function(){}})；
-
-
                 Cache.put(config.id+'Onload',0);
                 function listSizeFix(){
                     var bodyHeight = $(window).height();
                     var currentTop = $(listContainer).offset().top;
+                    var finalHeight = bodyHeight - currentTop;
+
+                    if(config.height){
+                        finalHeight = config.height;
+                    }
+
+                    if(config.additionHeight){
+                        finalHeight = finalHeight+parseInt(config.additionHeight);
+                    }
 
                     $('html').css({'min-height':currentTop})
-                    $('body').find(listContainer).css({'height':((bodyHeight - currentTop)+'px')})
+                    $('body').find(listContainer).css({'height':((finalHeight)+'px')})
                         
                     $('.cube-list-item-more-record').css({'border-bottom':'0px'});
 
@@ -623,7 +573,7 @@ define(['zepto', 'underscore', 'cube/loader', 'cube/cache', 'gmu', 'backbone'], 
                 }
                 if(onloadCounter>1&&$('body').find(listContainer).length==0){
                     clearInterval(timer);
-                    console.log('enddddd');
+                    console.log('cube---list---end');
                 }else{
                     Cache.put(config.id+'Onload',onloadCounter);
                 }

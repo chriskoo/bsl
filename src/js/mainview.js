@@ -72,7 +72,6 @@ define(['backbone', 'underscore'], function(Backbone, _) {
       var me = this;
 
       var pageEl = _.last(this.stack).el;
-      console.info(this.stack.length);
       var lastView = this.stack[this.stack.length - 2];
       $(lastView.el).show();
 

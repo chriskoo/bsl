@@ -67,44 +67,43 @@ requirejs.config({
 	}
 
 	require(['domReady', 'zepto', 'gmu', 'cube/i18n', 'lib/fastclick', 'cube/app'], function(domReady, $, gmu, i18n, FastClick, app) {
-		domReady(function() {
-			console.info($);
-			//remove 300ms delay
-			new FastClick(document.body);
-			//hide address bar
-			if (hideAddressBar) setTimeout(function() {
-					window.scrollTo(0, 1);
-				}, 0);
-			if (preventTouchMove) document.addEventListener('touchmove', function(e) {
-					e.preventDefault();
-				}, false);
+		// domReady(function() {
+		//remove 300ms delay
+		new FastClick(document.body);
+		//hide address bar
+		if (hideAddressBar) setTimeout(function() {
+				window.scrollTo(0, 1);
+			}, 0);
+		if (preventTouchMove) document.addEventListener('touchmove', function(e) {
+				e.preventDefault();
+			}, false);
 
-			function onDeviceReady(desktop) {
+		function onDeviceReady(desktop) {
 
-				// Hiding splash screen when app is loaded
-				window.isDesktop = desktop;
+			// Hiding splash screen when app is loaded
+			window.isDesktop = desktop;
 
-				app.initialize({
-					defaultModule: defaultModule,
-					defaultView: defaultView,
-					enablePad: enablePad,
-					loadMode: loadMode
-				});
+			app.initialize({
+				defaultModule: defaultModule,
+				defaultView: defaultView,
+				enablePad: enablePad,
+				loadMode: loadMode
+			});
 
-				$('html').css('min-height', window.screen.availHeight - 44 + "px");
-				// $('html').css('min-height', window.innerHeight);
+			$('html').css('min-height', window.screen.availHeight - 44 + "px");
+			// $('html').css('min-height', window.innerHeight);
 
-			}
+		}
 
-			if (enablePhoneGap && navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
-				// This is running on a device so waiting for deviceready event
-				document.addEventListener('deviceready', onDeviceReady, false);
+		if (enablePhoneGap && navigator.userAgent.match(/(iPad|iPhone|Android)/)) {
+			// This is running on a device so waiting for deviceready event
+			document.addEventListener('deviceready', onDeviceReady, false);
 
-			} else {
-				// On desktop don't have to wait for anything
-				onDeviceReady(true);
-			}
-		}); //domReady
+		} else {
+			// On desktop don't have to wait for anything
+			onDeviceReady(true);
+		}
+		// }); //domReady
 	});
 
 })();

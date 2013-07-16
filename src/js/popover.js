@@ -1,27 +1,4 @@
-/*********************************************************************
- * 系统名称   : 变色龙移动应用平台                                      	 *
- * 当前版本   : V2.0.0.0                                              	 *
- *--------------------------------------------------------------------*
- * 代码名称   : fixed.js                                           	 *
- * 业务系统   : cube框架                             					 *
- * 代码类型   : java                                                  	 *
- * 代码功能   : UC, QQ浏览器兼容性补丁                                     *
- *                                                                    *
- *--------------------------------------------------------------------*
- * 创建人员   : 变色龙一期人员                                          	 *
- * 创建日期   : 变色龙一期                                             	 *
- *--------------------------------------------------------------------*
- * 变更历史   : 														 *
- *日期		20130605												 *
- *变更人		冯秋明													 *
- *变更原因		修改该控件的加载与绑定机制   						       		 *
- *变更内容		将原来绑定控件[a标签的href属性]改为从popover中的trigger属性去寻找 *
- *			绑定的出发对象，同时也增加了显示目标对象，使得该控件能在指定的位置显示 *
- *           同时也增加了position属性，让用户决定该控件是否钉在页面上        	 *
- *                                                                    *
- *                                                                    *
- *                                                                    *
- *********************************************************************/
+
 define(['zepto', 'backbone', 'gmu', 'cube/fixed'], function($, Backbone, gmu, Fixed) {
 
 	var Popover = Backbone.View.extend({
@@ -53,67 +30,80 @@ define(['zepto', 'backbone', 'gmu', 'cube/fixed'], function($, Backbone, gmu, Fi
 
 			this.render();
 
-		},
+        },
 
 		render: function() {
 			var me = this;
 
 
 
-			var trigger = $(me.el).attr('trigger'); /* add by fengqiuming 20130605    */
+			var trigger = $(me.el).attr('trigger');/* add by fengqiuming 20130605    */
 			var btn = $(me.config.parent).find(trigger)[0];
 
 
 			var target = $(me.el).attr('target'); /* add by fengqiuming 20130605    */
-			if (target == '' || null) target = trigger;
+			if(target==''|| null) target = trigger;
 			//remove by qiuming 2013.05.06  code:var btn = $(this.config.parent).find('a[popoverTarget="#' + this.el.id + '"]')[0];
 			$(btn).bind('click', function() {
 
 
+				/* add by fengqiuming 20130605  start  */
+				$(me.el).offset(
+					{'left' : 0 ,
+					  'top' : 0}
+					);
+				$(me.el).css(
+					{'left' : 0 ,
+					  'top' : 0}
+					);
+
+
+		        function rePosition(){
+		        	var targetPosition = $(me.el).attr('position');
+				
+					if(targetPosition=='' || null) targetPosition='absolute';
+					$(me.el).css({'position':targetPosition});
+
+					var targetWidth = $(me.config.parent).find(target).width();
+					var targetHeight = $(me.config.parent).find(target).height();
+					var targetOffset = $(me.config.parent).find(target).offset();
+					var popoverWidth = $(me.el).width();
+					var targetTop = targetOffset.top;
+					if($(me.el).attr('position')=='fixed'){
+						targetTop = 10;
+					}
+					// alert('targetOffset.left = '+ targetOffset.left + "; targetWidth/2 = "+ targetWidth/2 +"; popoverWidth/2 = "+popoverWidth/2);
+
+					$(me.el).offset(
+						{'left' : (targetOffset.left + (targetWidth/2) /*+ (popoverWidth/2)*/ ),
+						  'top' : (targetTop + targetHeight - 35)}
+					);
+		        }
+
+		        if(me.reposi==null){
+			        me.reposi = rePosition;
+			    }
+		        rePosition();
+
 				me.onShow();
 
-				/* add by fengqiuming 20130605  start  */
-				$(me.el).offset({
-					'left': 0,
-					'top': 0
-				});
-				$(me.el).css({
-					'left': 0,
-					'top': 0
-				});
-
-
-				var targetPosition = $(me.el).attr('position');
-
-				if (targetPosition == '' || null) targetPosition = 'absolute';
-				$(me.el).css({
-					'position': targetPosition
-				});
-
-				var targetWidth = $(me.config.parent).find(target).width();
-				var targetHeight = $(me.config.parent).find(target).height();
-				var targetOffset = $(me.config.parent).find(target).offset();
-				var popoverWidth = $(me.el).width();
-
-				$(me.el).offset({
-					'left': (targetOffset.left + (targetWidth / 2) - (popoverWidth / 2)),
-					'top': (targetOffset.top + targetHeight)
-				});
+				
 
 				/* add by fengqiuming 20130605  end  */
 			});
 			console.info('======');
 			return this;
 		},
-
-		onShow: function(e) {
+		
+		reposi:null,
+		onShow: function() {
 
 			var me = this;
 			var popover = this.el;
 
 			var popDisplay = $(popover).css('display');
-			if (!this.isMaskShow) {
-				$('body').append(this.mask);
+			if(!this.isMaskShow){
+				$('body').prepend(this.mask);
 				this.isMaskShow = true;
 			}
 
@@ -123,16 +113,21 @@ define(['zepto', 'backbone', 'gmu', 'cube/fixed'], function($, Backbone, gmu, Fi
 				popover.style.display = 'block';
 				//popover.style.display = 'block';
 				// 选项卡出现的时候，遮罩层也相应出现
-				this.mask.css('display', 'block');
+				 this.mask.css('display', 'block');
+
+		        $(window).on('orientationchange',me.reposi);
+		        $(window).on('resize', me.reposi);
 			} else {
 				popover.style.display = 'none';
 				this.mask.css('display', 'none');
+		        $(window).off('orientationchange',me.reposi);
+		        $(window).off('resize', me.reposi);
 			}
-
+			
 
 			popover.offsetHeight;
 			popover.classList.add('visible');
-
+;
 			var popover_iScroll = new iScroll('popver-scroller', {
 				useTransition: true
 			});
@@ -170,7 +165,7 @@ define(['zepto', 'backbone', 'gmu', 'cube/fixed'], function($, Backbone, gmu, Fi
 			var me = this;
 			return _.map($(el).find(".popover"), function(tag) {
 
-
+				
 				return new Popover({
 					el: tag,
 					parent: el

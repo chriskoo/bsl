@@ -7,7 +7,7 @@ define(['zepto', 'backbone'], function($, Backbone){
 		},
 
 		initialize: function() {
-			console.log('segment init');
+			console.log('cube---segment---segment init');
 			var name = $(this.el).attr('name');
 			if(name&&!document.getElementById('seginput-' + this.el.id)){
 				var input = $('<input/>');
@@ -18,7 +18,7 @@ define(['zepto', 'backbone'], function($, Backbone){
 				input.appendTo(this.el);
 				input.hide();
 			}
-			console.log('segment:' + this.el);
+			console.log('cube---segment---segment:' + this.el);
 		},
 
 		render: function(){
@@ -26,7 +26,7 @@ define(['zepto', 'backbone'], function($, Backbone){
 		},
 
 		onClick: function(e){
-			console.log('segment click');
+			console.log('cube---segment---segment click');
 			var active = this.el.querySelector('.active');
 			if (active) {
 				$(active).removeClass('active');
@@ -37,7 +37,7 @@ define(['zepto', 'backbone'], function($, Backbone){
 			this.trigger('Segment:change', this);
 
 			e.preventDefault();
-			console.log('segment click end');
+			console.log('cube---segment---segment click end');
 		},
 
 		getActiveItem: function(){
@@ -59,7 +59,7 @@ define(['zepto', 'backbone'], function($, Backbone){
 
 	}, {
 		compile: function(el){
-			console.log('segment compile');
+			console.log('cube---segment---segment compile');
 			var me = this;
 			return _.map($(el).find(".segmented-controller"), function(tag){
 				return new Segment({el: tag});

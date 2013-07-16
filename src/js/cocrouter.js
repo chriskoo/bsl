@@ -89,7 +89,7 @@ define(['require', 'underscore', 'backbone', 'cube/mainview', 'cube/loader', 'cu
 
 		modularRoute: function(module, view, timestamp) {
 
-			console.log('mr:' + module + '/' + view + '/' + timestamp);
+			console.info("cube---cocrouter---modularRoute--" + module + '/' + view + '/' + timestamp);
 
 			var me = this;
 
@@ -100,29 +100,6 @@ define(['require', 'underscore', 'backbone', 'cube/mainview', 'cube/loader', 'cu
 			var loader;
 			var viewLoaded;
 			var moduleName;
-
-			//判断是否开启pad页面
-			if (this.enablePad === "true") {
-				console.info("enablePad === true");
-				//判断浏览器，如果是平板，则加载平板模块文件
-				if (Util.browser.versions.apad || Util.browser.versions.iPad) {
-					viewLoaded = require.defined(module + "/modulePad");
-					moduleName = "modulePad";
-				} else {
-					viewLoaded = require.defined(module + "/module");
-					moduleName = "module";
-				}
-			} else {
-				viewLoaded = require.defined(module + "/module");
-				moduleName = "module";
-
-				if (!viewLoaded) {
-					//TODO: show loading
-					loader = new Loader({
-						text: '加载中...'
-					});
-				}
-			}
 
 			//判断是否存在
 
@@ -184,16 +161,49 @@ define(['require', 'underscore', 'backbone', 'cube/mainview', 'cube/loader', 'cu
 					loader.hide();
 				}
 				// var failedId = err.requireModules && err.requireModules[0];
-				console.log('load fail: ' + err.message);
+				console.log("cube---cocrouter---load fail: " + err.message);
 			}
 
 			switch (this.loadMode) {
 				case 'app':
 					throw new Error('app scope router not implement yet');
 				case 'module':
+					console.info("cube---cocrouter---load by module");
+					//判断是否开启pad页面
+					if (this.enablePad === "true") {
+						console.info("cube---cocrouter---enablePad === true");
+						//判断浏览器，如果是平板，则加载平板模块文件
+						if (Util.browser.versions.apad || Util.browser.versions.iPad) {
+							viewLoaded = require.defined(module + "/modulePad");
+							moduleName = "modulePad";
+						} else {
+							viewLoaded = require.defined(module + "/module");
+							moduleName = "module";
+						}
+					} else {
+						viewLoaded = require.defined(module + "/module");
+						moduleName = "module";
+
+						if (!viewLoaded) {
+							//TODO: show loading
+							loader = new Loader({
+								text: '加载中...'
+							});
+						}
+					}
+
+
 					this._loadViewByModule(module, moduleName, view, success, fail);
 					break;
 				case 'view':
+					console.info("cube---cocrouter---load by view");
+					var viewLoaded = require.defined(module + "/" + view);
+					if (!viewLoaded) {
+						loader = new Loader({
+							text: '加载中...'
+						});
+					}
+
 					this._loadViewByView(module, view, success, fail);
 					break;
 				default:

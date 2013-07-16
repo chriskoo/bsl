@@ -1,0 +1,102 @@
+@import 'nib'
+
+.cube-loader
+  width: 1100%
+  height: 1100%
+  left: -400%
+  top: -400%
+  background-color: #444
+  opacity: 0.5
+  position: fixed
+  z-index: 9999999999999
+  vertical-align: middle
+  text-align: center
+
+.cube-loader-block
+  min-height: 90px
+  width: 85px
+  border-radius: 15px
+  background: #000
+  margin-left: -42.5px
+  margin-top: -35px
+  padding: 20px 5px 5px 5px
+  text-align: center
+  font-weight: bolder
+  color: #999
+  position: fixed
+  left: 50%
+  top: 40%
+
+.cube-loader-icon
+  width: 40px
+  height: 40px
+  margin: 0px auto 15px auto
+  background-image: url("../images/waiting.png")
+  background-size: 100%
+  -webkit-animation: animate-cloud 1.5s linear infinite
+  -moz-animation: animate-cloud 1.5s linear infinite
+  -ms-animation: animate-cloud 1.5s linear infinite
+  -o-animation: animate-cloud 1.5s linear infinite
+  animation: animate-cloud 1.5s linear infinite
+
+
+@keyframes animate-cloud
+  0%
+   -webkit-transform rotate(0deg) translateZ(0)
+  100%
+   -webkit-transform rotate(360deg) translateZ(0)
+
+
+.cube-loader-mask
+  width: 1100%
+  height: 1100%
+  left: -400%
+  top: -400%
+  background-color: #444
+  opacity: 0.5
+  position: fixed
+  z-index: 9999
+  vertical-align: middle
+  text-align: center
+
+.cube-flight-loader
+  min-height: 140px
+  width: 250px
+  background-image: url(../images/loader_bg.png)
+  background-size: 250px 140px
+  background-position: center
+  margin-left: -116px
+  margin-top: -35px
+  color: #999
+  font-weight: bolder
+  position: fixed
+  z-index: 10000
+  left: 50%
+  top: 40%
+
+cube-flight-loader-flight
+  padding-left: 12px
+  margin-top: 75px
+  height: 40px
+  width: 40px
+  -webkit-animation: wobble2 1.5s linear infinite
+  animation: wobble2 1.5s linear infinite
+
+.cube-flight-loader-cancel img
+  position: static
+  float: right
+  margin-right: 6px
+  margin-top: 5.5px
+  height: 25px
+  width: 25px
+
+.cube-loader-text
+  left: 50%
+  top: 40%
+  position: absolute
+  margin-top: -10px
+  margin-left: -40px
+  color: white
+  font: 16px/1.25 "Helvetica Neue",sans-serif
+  font-size: 16px
+

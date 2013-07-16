@@ -15,7 +15,7 @@ define(['zepto', 'backbone', 'cube/mainview', 'cube/cocrouter'], function($, Bac
     });
 
     var rootPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/'));
-    console.log('start watch history, rootPath: ' + rootPath);
+    console.info("cube---app---start watch history, rootPath: " + rootPath);
     Backbone.history.start({
       pushState: false,
       root: rootPath

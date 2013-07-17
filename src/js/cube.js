@@ -2,8 +2,6 @@ define(function(require) {
   var v0 = require('cube/app');
   var v1 = require('cube/base64Img');
   var v2 = require('cube/cache');
-  var v3 = require('cube/cal_main');
-  var v4 = require('cube/calendar');
   var v5 = require('cube/carousel');
   var v6 = require('cube/cocrouter');
   var v7 = require('cube/cube-calendar');
@@ -24,12 +22,11 @@ define(function(require) {
   var v32 = require('cube/util');
   var v33 = require('cube/validator');
   var v34 = require('cube/view');
+  var v35 = require('cube/datepicker');
   return {
     'App': v0,
     'Base64Img': v1,
     'Cache': v2,
-    'Cal_main': v3,
-    'Calendar': v4,
     'Carousel': v5,
     'Cocrouter': v6,
     'CubeCalendar': v7,
@@ -49,6 +46,7 @@ define(function(require) {
     'Store': v30,
     'Util': v32,
     'Validator': v33,
-    'View': v34
+    'View': v34,
+    'Datepicker': v35
   };
 });

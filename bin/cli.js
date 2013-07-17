@@ -28,7 +28,18 @@ function cloneCube(dest, fn) {
 }
 
 
-program.option('-c, --compass', 'compass when possible');
+// program.option('-c, --compass', 'compass when possible');
+
+program
+  .command('login')
+  .action(function(){
+    program.prompt('name:', function(name){
+      // program.prompt('password:', function(password){
+      //   console.log('login as %s / %s', name, password);
+      // });
+    console.log('sssssss');
+    });
+  });
 
 program
   .command('app <name>')
@@ -134,6 +145,15 @@ program
     if (error) throw error;
   });
 });
+
+program
+  .command('publish <module>')
+  .description('publish module to server')
+  .action(function(moduleId){
+
+  });
+
+
 
 /**
  * compass js files into one js file

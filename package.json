@@ -21,6 +21,7 @@
     "underscore": "*",
     "rimraf": "*",
     "adm-zip": "0.4.3",
-    "request": "*"
+    "request": "*",
+    "async": "*"
   }
 }

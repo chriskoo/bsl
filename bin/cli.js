@@ -1,22 +1,23 @@
 #!/usr/bin/env node
 
-var program = require('commander'),
-  util = require('util'),
-  path = require('path'),
-  ncp = require('ncp').ncp,
-  express = require('express'),
-  fs = require('fs'),
-  https = require('https'),
-  mkdirp = require('mkdirp'),
-  _ = require('underscore'),
-  rimraf = require('rimraf'),
-  AdmZip = require('adm-zip'),
-  request = require('request'),
-  exec = require("child_process").exec,
-  pkg = require('../package.json'),
-  version = pkg.version;
+var program   = require('commander'),
+  util        = require('util'),
+  path        = require('path'),
+  ncp         = require('ncp').ncp,
+  express     = require('express'),
+  fs          = require('fs'),
+  https       = require('https'),
+  mkdirp      = require('mkdirp'),
+  _           = require('underscore'),
+  rimraf      = require('rimraf'),
+  AdmZip      = require('adm-zip'),
+  request     = require('request'),
+  async       = require('async'),
+  exec        = require("child_process").exec,
+  pkg         = require('../package.json'),
+  version     = pkg.version;
 
-console.log('Cube Framework SDK v' + version);
+console.log('BSL SDK v' + version);
 console.log('current path: %s', path.resolve('.'));
 console.log('sdk path: %s', path.resolve(__dirname));
 
@@ -113,6 +114,20 @@ program
   scaffold('view.html', path.resolve('.', module, name + '.html'), data);
   scaffold('view.js', path.resolve('.', module, name + '.js'), data);
 });
+
+program
+  .command('protal <module> <name>')
+  .description('generate protal view')
+  .action(function(module, view){
+    //remove tail slash
+    if (endsWith(module, '/')) module = module.substring(0, module.length - 1);
+    var data = {
+      module: module,
+      view: name
+    };
+    scaffold('protalview.html', path.resolve('.', module, name + '.html'), data);
+    scaffold('protalview.js', path.resolve('.', module, name + '.js'), data);
+  });
 
 program
   .command('package <module>')
@@ -239,6 +254,14 @@ program.parse(process.argv);
 function runServer() {
   var app = express();
   app.use(express.static(path.resolve('.')));
+  app.get('/debugger/app', function(req, res){
+    fs.readdir(path.resolve('.'), function(err, files){
+      async.map(files, fs.stat, function(err, results){
+        debugger
+        res.send(results.join(' / '));
+      });
+    });
+  });
   app.listen(3000);
   console.log('Cube Server Started, listening at 3000...');
 }

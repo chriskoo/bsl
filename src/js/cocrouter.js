@@ -148,8 +148,14 @@ define(['require', 'underscore', 'backbone', 'cube/mainview', 'cube/loader', 'cu
 				// 	me.delegate.changePage(viewInstance, module);
 				// }
 
-				//只是采用changePage
-				me.delegate.changePage(viewInstance, module);
+				if (viewInstance.type == 'portal') {
+					viewInstance.render();
+				} else {
+					//只是采用changePage
+					me.delegate.changePage(viewInstance, module);
+				}
+
+
 				if (loader !== undefined) {
 					loader.hide();
 				}
